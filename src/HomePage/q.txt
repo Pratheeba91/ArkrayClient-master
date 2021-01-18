@@ -1,0 +1,48 @@
+console.log('starting function');
+ 
+const AWS = require('aws-sdk');
+const docClient = new AWS.DynamoDB.DocumentClient({region: 'ap-south-1'});
+
+module.exports.handler = function(e,ctx,callback){
+    
+ 
+    
+    var scanningparameters = {
+    TableName : 'prath',
+       FilterExpression: "#devi_id = :user_status_val AND #timevalue = :timestamp_val",
+    ExpressionAttributeNames: {
+        "#devi_id": "devi_id",
+        "#timevalue": "timevalue",
+
+    },
+    ExpressionAttributeValues: { ":user_status_val": e.queryStringParameters.devi_id,":timestamp_val": e.queryStringParameters.timevalue }
+
+};
+    
+try{
+     docClient.scan(scanningparameters , function(err, data){
+        if(err){
+            callback(err, null);
+        }else{
+            callback(null, data);
+            responseBody = data;
+        }
+    });
+}
+catch(err){
+    responseBody = "unable to get user data";
+   statuscode = 403;
+}
+
+const response ={
+     "statusCode": "200",
+    "headers":{
+      "myHeader": "test"  
+    },
+        "body": JSON.stringify(responseBody),
+        "isBase64Encoded": false
+    
+    };
+
+    callback(null, response);
+}
