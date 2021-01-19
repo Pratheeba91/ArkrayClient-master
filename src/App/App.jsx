@@ -43,6 +43,7 @@ class App extends React.Component {
                             <Switch>
                                 <PrivateRoute exact path="/" component={DevicePage} />
                                 <Route path="/login" component={LoginPage} />
+								 <Route path="/DevicePage" component={DevicePage} />
 								<Route path="/MsuremntPage" component={MsuremntPage} />
 						        <Route path="/MonthPage" component={MonthPage} />
 								 <Route path="/DateListPage" component={DateListPage} />

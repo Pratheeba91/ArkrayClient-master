@@ -23,21 +23,21 @@ function login(username, password) {
     return dispatch => {
         dispatch(request({ username }));
 
-        userService.login(username, password)
-            .then(
-                user => { 
-                    dispatch(success(user));
-                    history.push('/');
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
+                    if(username=="arkray" && password=="arkray"){
+					 dispatch(success(username));
+                    history.push('/DevicePage');	
+					}
+					else{
+						
+						alert("Username or password incorrect");
+					}
+                   
+                
+            
     };
 
-    function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
-    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
+    function request(username) { return { type: userConstants.LOGIN_REQUEST, username } }
+    function success(username) { return { type: userConstants.LOGIN_SUCCESS, username } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
